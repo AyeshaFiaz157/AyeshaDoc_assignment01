@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Internet and Web Fundamentals documentation for Assignment #1.">
+  <title>Internet &amp; Web Fundamentals | Web Theory Docs</title>
+  <style>
+    :root { --bg:#f7f8fb; --surface:#fff; --sidebar:#fbfcfe; --ink:#182230; --muted:#687486; --line:#e4e8ef; --blue:#2563eb; --blue-soft:#eff6ff; --navy:#142337; --code:#111b2b; --radius:8px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:80px; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.7; }
+    a { color:var(--blue); text-underline-offset:3px; }
+    a:hover { color:#1747b0; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    :focus-visible { outline:3px solid #93c5fd; outline-offset:3px; }
+    code { padding:2px 5px; border:1px solid #dbe2ec; border-radius:4px; background:#f3f5f8; color:#334155; font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:.86em; }
+    .topbar { position:sticky; top:0; z-index:20; height:64px; background:rgba(255,255,255,.94); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .topbar-inner { width:min(1440px,100%); height:100%; margin:auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:10px; color:var(--ink); font-size:15px; font-weight:750; text-decoration:none; letter-spacing:-.01em; }
+    .brand-mark { width:28px; height:28px; display:grid; place-items:center; border-radius:7px; background:var(--blue); color:#fff; font-size:13px; font-weight:800; }
+    .brand-context { color:var(--muted); font-weight:500; }
+    .top-actions { display:flex; align-items:center; gap:18px; color:var(--muted); font-size:13px; }
+    .top-actions a { color:var(--muted); text-decoration:none; }
+    .top-actions a:hover { color:var(--blue); }
+    .search { display:flex; align-items:center; gap:8px; width:220px; padding:7px 11px; border:1px solid var(--line); border-radius:6px; background:#fafbfc; color:#94a0af; font-size:12px; }
+    .search kbd { margin-left:auto; padding:1px 5px; border:1px solid #dce2e9; border-radius:4px; font-size:10px; }
+    .docs-shell { width:min(1440px,100%); margin:auto; display:grid; grid-template-columns:250px minmax(0,1fr) 210px; }
+    .sidebar { position:sticky; top:64px; height:calc(100vh - 64px); overflow-y:auto; padding:34px 22px 40px 28px; background:var(--sidebar); border-right:1px solid var(--line); }
+    .sidebar-label,.rail-label { margin:0 0 12px; color:#98a2b1; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .sidebar-intro { margin:0 0 26px; color:var(--muted); font-size:12px; line-height:1.5; }
+    .nav-group { margin:0 0 25px; }
+    .nav-group-title { margin:0 0 7px; color:#929cab; font-size:11px; font-weight:700; }
+    .doc-nav { list-style:none; margin:0; padding:0; }
+    .doc-nav a { display:block; margin:2px 0; padding:7px 10px; border-radius:6px; color:#526073; font-size:13px; line-height:1.35; text-decoration:none; }
+    .doc-nav a:hover { background:#eef3fa; color:var(--ink); }
+    .doc-nav a.active { background:#e9f1ff; color:#1d4ed8; font-weight:700; }
+    .doc-nav .nav-number { display:inline-block; width:22px; color:#9ba7b6; font-size:11px; }
+    .main-content { min-width:0; padding:42px clamp(28px,5vw,76px) 100px; }
+    .content-wrap { max-width:760px; margin:0 auto; }
+    .breadcrumbs { display:flex; align-items:center; gap:8px; margin-bottom:28px; color:#8a95a4; font-size:12px; }
+    .breadcrumbs a { color:#6b7788; text-decoration:none; }
+    .breadcrumbs span { color:#c2c9d3; }
+    .page-header { padding-bottom:30px; border-bottom:1px solid var(--line); }
+    .eyebrow { color:var(--blue); font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    h1,h2,h3,h4,h5,h6 { color:var(--ink); line-height:1.25; letter-spacing:-.025em; }
+    h1 { margin:10px 0 12px; font-size:clamp(2rem,4vw,3rem); letter-spacing:-.045em; }
+    h2 { margin:0 0 14px; font-size:1.7rem; }
+    h3 { margin:0 0 7px; font-size:1.05rem; }
+    h4 { margin:24px 0 5px; font-size:.96rem; }
+    h5 { margin:18px 0 5px; font-size:.86rem; }
+    h6 { margin:14px 0 4px; color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+    .page-description { max-width:650px; margin:0; color:var(--muted); font-size:16px; line-height:1.65; }
+    .meta-row { display:flex; flex-wrap:wrap; align-items:center; gap:9px 18px; margin-top:20px; color:#8994a3; font-size:12px; }
+    .status { display:inline-flex; align-items:center; gap:6px; color:#3f7c5b; font-weight:700; }
+    .status::before { content:""; width:6px; height:6px; border-radius:50%; background:#45a36c; }
+    .doc-section { scroll-margin-top:88px; padding:42px 0 12px; border-bottom:1px solid var(--line); }
+    .doc-section:last-child { border-bottom:0; }
+    .section-kicker { display:flex; align-items:center; gap:9px; margin-bottom:9px; color:#8b96a5; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+    .section-kicker::before { content:""; width:18px; height:1px; background:var(--blue); }
+    .lead { margin:0 0 24px; color:var(--muted); font-size:15px; }
+    .definition-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; }
+    .definition { min-width:0; padding:15px 16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); }
+    .definition h3 { color:#27364a; }
+    .definition p { margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .definition h3 a { color:inherit; text-decoration:none; }
+    .definition h3 a:hover { color:var(--blue); }
+    .note { margin:24px 0; padding:15px 17px; border:1px solid #d5e4ff; border-left:3px solid var(--blue); border-radius:var(--radius); background:var(--blue-soft); color:#43536a; font-size:13px; }
+    .note strong { display:block; margin-bottom:3px; color:#1e3a8a; }
+    .workflow { display:grid; grid-template-columns:repeat(3,1fr); margin:24px 0; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); overflow:hidden; }
+    .workflow-step { padding:17px 15px; border-right:1px solid var(--line); }
+    .workflow-step:last-child { border-right:0; }
+    .workflow-step b { display:block; margin-bottom:5px; color:var(--blue); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+    .workflow-step strong { display:block; margin-bottom:3px; font-size:13px; }
+    .workflow-step p { margin:0; color:var(--muted); font-size:12px; line-height:1.5; }
+    .protocol-list { margin:22px 0; border-top:1px solid var(--line); }
+    .protocol-row { display:grid; grid-template-columns:90px 1fr; gap:18px; padding:15px 0; border-bottom:1px solid var(--line); }
+    .protocol-tag { align-self:start; padding:3px 7px; border-radius:4px; background:#edf2f7; color:#455468; font-family:monospace; font-size:12px; font-weight:700; text-align:center; }
+    .protocol-row p { margin:0; color:var(--muted); font-size:13px; }
+    blockquote { margin:24px 0; padding:17px 20px; border-left:3px solid #9aa8bb; background:#f4f6f9; color:#526175; font-size:14px; }
+    mark { padding:2px 4px; border-radius:3px; background:#fff0b8; color:inherit; }
+    u { text-decoration-color:#93b7f8; text-underline-offset:3px; }
+    em { color:#405b7a; }
+    .code-title { display:block; margin:21px 0 6px; color:#7a8798; font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+    pre { overflow:auto; margin:0 0 22px; padding:18px 20px; border:1px solid #27364c; border-radius:var(--radius); background:var(--code); color:#dbeafe; font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:12px; line-height:1.7; tab-size:2; }
+    pre code { padding:0; border:0; background:transparent; color:inherit; font-size:inherit; }
+    .syntax { color:#93c5fd; } .keyword { color:#fcd34d; } .comment { color:#8191a7; }
+    figure { margin:24px 0; }
+    .concept-image { display:block; width:100%; height:190px; object-fit:cover; border-radius:var(--radius); filter:saturate(.75); }
+    figcaption { margin-top:7px; color:#8994a3; font-size:11px; }
+    .right-rail { position:sticky; top:64px; height:calc(100vh - 64px); padding:52px 25px 40px 20px; }
+    .right-rail nav { border-left:1px solid var(--line); }
+    .right-rail a { display:block; padding:4px 0 4px 14px; color:#8a95a4; font-size:12px; line-height:1.4; text-decoration:none; }
+    .right-rail a:hover,.right-rail a.current { color:var(--blue); }
+    .right-rail a.current { border-left:2px solid var(--blue); margin-left:-1px; font-weight:700; }
+    .footer { padding:26px 28px; border-top:1px solid var(--line); color:#7d8998; font-size:12px; }
+    .footer-inner { width:min(1440px,100%); margin:auto; display:flex; justify-content:space-between; gap:20px; }
+    ul,ol { padding-left:22px; } li { margin:5px 0; }
+    hr { border:0; border-top:1px solid var(--line); margin:27px 0; }
+    small { font-size:.82em; }
+    @media (max-width:1100px) { .docs-shell { grid-template-columns:220px minmax(0,1fr); } .right-rail { display:none; } }
+    @media (max-width:720px) {
+      .topbar { height:auto; min-height:60px; } .topbar-inner { padding:12px 18px; flex-wrap:wrap; gap:10px; }
+      .brand-context,.top-actions a { display:none; } .top-actions { margin-left:auto; } .search { width:155px; }
+      .docs-shell { display:block; }
+      .sidebar { position:static; height:auto; padding:16px 18px; border-right:0; border-bottom:1px solid var(--line); }
+      .sidebar-intro,.sidebar-label { display:none; } .nav-group { margin:0; } .nav-group:not(:first-of-type) { display:none; }
+      .nav-group-title { display:none; } .doc-nav { display:flex; gap:4px; overflow:auto; } .doc-nav li { flex:0 0 auto; }
+      .doc-nav a { white-space:nowrap; padding:6px 9px; font-size:12px; } .doc-nav .nav-number { display:none; }
+      .main-content { padding:28px 19px 64px; } .breadcrumbs { margin-bottom:20px; }
+      .definition-grid { grid-template-columns:1fr; } .workflow { grid-template-columns:1fr; }
+      .workflow-step { border-right:0; border-bottom:1px solid var(--line); } .workflow-step:last-child { border-bottom:0; }
+      .protocol-row { grid-template-columns:72px 1fr; gap:12px; } .footer-inner { display:block; } .footer-inner a { display:inline-block; margin-top:7px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Product-style utility header. -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top"><span class="brand-mark">W</span><span>Web Theory Docs</span><span class="brand-context">/ Assignment #1</span></a>
+      <div class="top-actions"><div class="search" aria-label="Documentation search">⌕ <span>Search docs</span><kbd>⌘ K</kbd></div><a href="https://www.w3.org/">Web standards ↗</a></div>
+    </div>
+  </header>
+  <div id="top" class="docs-shell">
+    <!-- Primary documentation navigation. -->
+    <aside class="sidebar" aria-label="Documentation navigation">
+      <p class="sidebar-label">Course documentation</p>
+      <p class="sidebar-intro">A practical reference for understanding how the Internet and Web work together.</p>
+      <div class="nav-group"><p class="nav-group-title">Fundamentals</p><ul class="doc-nav">
+        <li><a class="active" href="#core"><span class="nav-number">01</span>Core web entities</a></li>
+        <li><a href="#clients"><span class="nav-number">02</span>Clients &amp; domains</a></li>
+        <li><a href="#protocols"><span class="nav-number">03</span>Protocols &amp; security</a></li>
+        <li><a href="#technologies"><span class="nav-number">04</span>Technologies &amp; search</a></li>
+      </ul></div>
+      <div class="nav-group"><p class="nav-group-title">Quick reference</p><ol class="doc-nav"><li><a href="#html">HTML boilerplate</a></li><li><a href="#dns">DNS lookup</a></li><li><a href="#links">Hyperlinks</a></li></ol></div>
+    </aside>
+    <main class="main-content">
+      <div class="content-wrap">
+        <div class="breadcrumbs"><a href="#top">Web Theory Docs</a><span>/</span><span>Fundamentals</span><span>/</span><strong>Introduction</strong></div>
+        <header class="page-header">
+          <div class="eyebrow">Assignment #1 · Reference guide</div>
+          <h1>Internet &amp; Web Fundamentals</h1>
+          <p class="page-description">A structured guide to the systems, standards, and technologies that make the modern web work.</p>
+          <div class="meta-row"><span class="status">Complete guide</span><span>Prepared for LGU</span><span>8 min read</span><span>Updated September 2026</span><small>HTML reference edition</small></div>
+        </header>
+        <article>
+          <!-- Core vocabulary section. -->
+          <section id="core" class="doc-section">
+            <div class="section-kicker">01 · Fundamentals</div><h2>Core Web &amp; Network Entities</h2>
+            <p class="lead">The Internet is the infrastructure; the World Wide Web is an information system that runs across it.</p>
+            <figure><img class="concept-image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Blue network lines representing connected computers"><figcaption>Connected devices form the physical and logical landscape where web documents travel.</figcaption></figure>
+            <div class="definition-grid">
+              <div class="definition"><h3><a href="https://www.cloudflare.com/learning/network-layer/what-is-the-internet/">Internet</a></h3><p>A global network of networks that links computers and devices using shared communication protocols.</p></div>
+              <div class="definition"><h3><a href="https://www.w3.org/standards/webdesign/">World Wide Web</a></h3><p>An information system of linked resources accessed over the Internet through browsers and web protocols.</p></div>
+              <div class="definition"><h3><a href="https://www.w3.org/">W3C</a></h3><p>The World Wide Web Consortium, which develops open standards for an accessible and interoperable Web.</p></div>
+              <div class="definition"><h3>Web Page</h3><p>A single document, usually written in HTML, that a browser can request, render, and display.</p></div>
+              <div class="definition"><h3>Website</h3><p>A collection of related web pages and assets published under a common domain name.</p></div>
+              <div class="definition"><h3>Home Page</h3><p>The welcoming or default page of a website, helping visitors understand where to begin.</p></div>
+              <div class="definition"><h3>Index Page</h3><p>A directory-like entry page, commonly named <code>index.html</code>, served when no specific file is requested.</p></div>
+              <div class="definition"><h3>Landing Page</h3><p>A focused page designed for a specific visitor action, such as signing up or learning more.</p></div>
+            </div>
+            <blockquote>Every website is part of the Web, but the Web is only one service built on top of the Internet.</blockquote>
+          </section>
+          <!-- Naming, addressing, and request flow section. -->
+          <section id="clients" class="doc-section">
+            <div class="section-kicker">02 · Request flow</div><h2>Clients, Servers &amp; Domains</h2>
+            <p class="lead">A page load is a conversation: a client asks, a server responds, and naming systems help the request find its destination.</p>
+            <div class="workflow"><div class="workflow-step"><b>Step 01</b><strong>Ask</strong><p>A <strong>Web Browser</strong> requests a resource using a URL.</p></div><div class="workflow-step"><b>Step 02</b><strong>Resolve</strong><p><strong>DNS</strong> maps the domain to an IP Address.</p></div><div class="workflow-step"><b>Step 03</b><strong>Respond</strong><p>A <strong>Web Server</strong> returns the requested page.</p></div></div>
+            <div class="definition-grid">
+              <div class="definition"><h3>Web Browser</h3><p>Client software that requests resources and turns HTML, CSS, and JavaScript into a usable interface.</p></div>
+              <div class="definition"><h3>Web Server</h3><p>A computer and software stack that stores, processes, and delivers web resources to clients.</p></div>
+              <div class="definition"><h3>Web Domain</h3><p>A human-friendly name, such as <u>example.com</u>, that identifies a site within DNS.</p></div>
+              <div class="definition"><h3>URL</h3><p>A Uniform Resource Locator that tells a browser <em>where</em> a resource is and <em>how</em> to retrieve it.</p></div>
+              <div class="definition"><h3>URI</h3><p>A Uniform Resource Identifier: the broader standard for identifying a resource by location, name, or both.</p></div>
+              <div class="definition"><h3>IP Address</h3><p>A numerical address assigned to a device, such as <code>203.0.113.10</code>, so packets can be routed to it.</p></div>
+              <div class="definition"><h3>DNS</h3><p>The Domain Name System translates memorable domain names into IP addresses.</p></div>
+              <div class="definition" id="dns"><h3>NSlookup</h3><p>A command-line diagnostic tool for querying DNS records and checking how a name resolves.</p></div>
+            </div>
+            <hr><div class="note"><strong>One address, many clues</strong> In <code>https://example.com/news</code>, the scheme is <strong>https</strong>, the domain is <strong>example.com</strong>, and <strong>/news</strong> is the path.</div>
+            <span class="code-title">A quick DNS lookup</span><pre><code><span class="keyword">nslookup</span> example.com
+<span class="comment"># Ask the configured DNS resolver for the domain's address.</span></code></pre>
+          </section>
+          <!-- Transport and security section. -->
+          <section id="protocols" class="doc-section">
+            <div class="section-kicker">03 · Network layer</div><h2>Protocols &amp; Security</h2>
+            <p class="lead">Protocols are agreed rules. They let different machines exchange information predictably, while security layers protect that exchange.</p>
+            <div class="protocol-list">
+              <div class="protocol-row"><span class="protocol-tag">HTTP</span><p><strong>Hypertext Transfer Protocol.</strong> The request-and-response language used to transfer web resources between clients and servers.</p></div>
+              <div class="protocol-row"><span class="protocol-tag">HTTPS</span><p><strong>HTTP Secure.</strong> It uses encryption and authentication to make web communication safer against interception and tampering.</p></div>
+              <div class="protocol-row"><span class="protocol-tag">SSL</span><p><strong>Secure Sockets Layer.</strong> An older predecessor to TLS that introduced encrypted communication for online connections.</p></div>
+              <div class="protocol-row"><span class="protocol-tag">TLS</span><p><strong>Transport Layer Security.</strong> The modern cryptographic protocol used by HTTPS to protect data in transit.</p></div>
+            </div>
+            <div class="note"><strong><mark>Why the padlock matters</mark></strong> HTTPS does not guarantee that a site is honest, but it helps confirm server identity and keeps the connection private from casual observers.</div>
+          </section>
+          <!-- Authoring, discovery, and linking section. -->
+          <section id="technologies" class="doc-section">
+            <div class="section-kicker">04 · Authoring &amp; discovery</div><h2>Web Technologies &amp; Search</h2>
+            <p class="lead">The visible page is authored, discovered, and connected through a small set of powerful technologies and conventions.</p>
+            <div id="html"><h3>HTML</h3><p><strong>HyperText Markup Language</strong> gives a document structure and meaning. Semantic elements help both people and software understand its organization.</p>
+              <h4>Structure before styling</h4><p>Headings create a readable outline, while paragraphs hold ideas and landmarks help visitors move through the page.</p>
+              <h5>Meaningful elements</h5><p>Choosing an element for its meaning makes a document more accessible and easier to maintain.</p>
+              <h6>Small details matter</h6><p>A well-shaped document gives every reader a clearer path through the same information.</p>
+              <span class="code-title">The full HTML boilerplate</span><pre><code><span class="syntax">&lt;!DOCTYPE html&gt;</span>
+<span class="syntax">&lt;html lang="en"&gt;</span>
+  <span class="syntax">&lt;head&gt;</span>
+    <span class="syntax">&lt;meta charset="UTF-8"&gt;</span>
+    <span class="syntax">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+    <span class="syntax">&lt;title&gt;</span>My Web Page<span class="syntax">&lt;/title&gt;</span>
+  <span class="syntax">&lt;/head&gt;</span>
+  <span class="syntax">&lt;body&gt;</span>
+    <span class="syntax">&lt;h1&gt;</span>Hello, Web<span class="syntax">&lt;/h1&gt;</span>
+  <span class="syntax">&lt;/body&gt;</span>
+<span class="syntax">&lt;/html&gt;</span></code></pre>
+            </div>
+            <div class="definition-grid"><div class="definition"><h3>Search Engines</h3><p>Services that crawl, index, and rank web content so people can find relevant answers through queries.</p></div><div class="definition"><h3>ChatGPT</h3><p>An AI conversational system that can explain concepts, generate drafts, and help people explore information through natural language.</p></div><div class="definition" id="links"><h3>Hyperlinks / Links</h3><p>Clickable references that connect one resource to another. Visit <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN's HTML reference</a>.</p></div></div>
+            <aside class="note"><strong>Keep exploring</strong> The best way to learn the Web is to inspect it. Open a page's source, follow a link, and notice how a browser turns a document into an experience.</aside>
+          </section>
+        </article>
+      </div>
+    </main>
+    <!-- Contextual outline for the current documentation page. -->
+    <aside class="right-rail" aria-label="On this page"><p class="rail-label">On this page</p><nav><a class="current" href="#core">Core entities</a><a href="#clients">Request flow</a><a href="#dns">DNS lookup</a><a href="#protocols">Security protocols</a><a href="#html">HTML</a><a href="#links">Hyperlinks</a></nav></aside>
+  </div>
+  <!-- Assignment metadata footer. -->
+  <footer class="footer"><div class="footer-inner"><span>Assignment #1 - Prepared for LGU | Submitted by Student</span><a href="#top">Back to top ↑</a></div></footer>
++</body>
++</html>
